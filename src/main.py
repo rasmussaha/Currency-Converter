@@ -1,20 +1,20 @@
 import requests
 
 # API key and url
-api_key = "bVpcjeNUDqsgsTxvAbkmA2QAFsJiHk"
-url = "https://www.amdoren.com/api/currency.php"
+api_key = "30ebdcdf9cb24a9d851c26046e9bd25e"
+url = "https://api.currencyfreaks.com/v2.0/convert/latest?from=usd&to=pkr&amount=500&apikey=YOUR_APIKEY"
 
 while True:
     # Get user input
-    first_conversion = input("What currency do you want to convert from? (e.g., EUR, USD): ").upper()
-    second_conversion = input("What currency do you want to convert to? (e.g., EUR, USD): ").upper()
+    from_currency = input("What currency do you want to convert from? (e.g., EUR, USD): ").upper()
+    to_currency = input("What currency do you want to convert to? (e.g., EUR, USD): ").upper()
     amount = input("What amount do you want to convert? ")
 
     # The URL query parameters
     params = {
-        "api_key": api_key,
-        "from": first_conversion,
-        "to": second_conversion,
+        "apikey": api_key,
+        "from": from_currency,
+        "to": to_currency,
         "amount": amount
     }
 
@@ -25,7 +25,7 @@ while True:
 
     data['error'] == 0:
     converted_amount = data['amount']
-    print(f"{amount} {first_conversion} is equal to {converted_amount} {second_conversion}.")
+    print(f"{amount} {from_currency is equal to {converted_amount} {to_currency}.")
 
     # Ask the user if they want to continue converting
     while True:
