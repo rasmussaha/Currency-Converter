@@ -22,13 +22,46 @@ cd Currency-Converter
 
 ## Usage
 
-Examples of how to use your project, ideally with code examples and screenshots:
-
 ```python
-# Example of code
-import yourpackage
+# Example of usage
+import requests
 
-yourpackage.do_something()
+# API key and base URL
+api_key = "YOUR_API_KEY"
+base_url = "https://v6.exchangerate-api.com/v6/"
+
+while True:
+    from_currency = input("What currency do you want to convert from? (e.g., EUR, USD): ").upper()
+    to_currency = input("What currency do you want to convert to? (e.g., EUR, USD): ").upper()
+    amount = input("What amount do you want to convert? ")
+
+    try:
+        amount = float(amount)
+    except ValueError:
+        print("Invalid amount. Please enter a numeric value.")
+        continue
+
+    url = f"{base_url}{api_key}/latest/{from_currency}"
+
+    response = requests.get(url)
+    if response.status_code != 200:
+        print("Error: Could not retrieve data from the API.")
+        continue
+
+    data = response.json()
+
+    if to_currency in data["conversion_rates"]:
+        rate = data["conversion_rates"][to_currency]
+        converted_amount = rate * amount
+        print(f"{amount} {from_currency} is equal to {converted_amount:.2f} {to_currency}.")
+    else:
+        print("Error: Could not retrieve conversion rate for the specified currencies.")
+
+    stop = input("Do you want to continue converting? yes/no: ").strip().lower()
+    if stop == "no":
+        print("Stopping the conversion process.")
+        break
+
 ```
 
 
@@ -39,7 +72,7 @@ yourpackage.do_something()
 
 ## Contributing
 
-State if you are open to contributions and what your requirements are for accepting them.
+I am open to contributions! Please follow these steps:
 
 1. Fork the project
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
